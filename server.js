@@ -1,16 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
+const db = require('./connection');
 require('console.table');
-
-const db = mysql.createConnection(
-    {
-      host: 'localhost',
-      user: 'root',
-      password: 'password',
-      database: 'company_db'
-    },
-    console.log(`Connected to the company database.`)
-);
 
 const question = () => {
   inquirer
@@ -114,7 +105,7 @@ const updateEmployeeRole = () => {
       },
     ])
     .then((answers) => {
-      db.query('UPDATE employee SET roles_id = ? WHERE id = ?', [answers.roleId, answers.employeeId], (err, results) => {
+      db.query('UPDATE employee SET roles_id = ? WHERE id = ?', [answers.roleId, answers.employeeId], (err, result) => {
         if (err) {
           console.log(err);
         }
