@@ -38,13 +38,13 @@ const question = () => {
           ViewAllRoles();
           break;
         case 'Add Role':
-          // RUN ADD ROLE QUERY HERE
+          addRole();
           break;
         case 'View All Departments':
-          // RUN VIEW DEPARTMENTS QUERY HERE
+          viewAllDepartments();
           break;
         case 'Add Department':
-          // RUN ADD DEPARTMENTS QUERY HERE
+          addDepartment();
           break;
         case 'Quit':
           // RUN QUIT HERE
@@ -137,6 +137,67 @@ const ViewAllRoles = () => {
     console.table(result);
     question();
   });
-}
+};
+
+const addRole = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'role',
+        message: 'What is the name of the role?',
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary of the role?',
+      },
+      {
+        type: 'list',
+        name: 'deparment',
+        message: 'Which department does this role belong to?',
+        choices: ['test'], // Need to find way to query department names
+      },
+    ])
+    .then((answers) => {
+      db.query('INSERT INTO role SET ?', [answers], (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.table(result);
+        question();
+      });
+    });
+};
+
+const viewAllDepartments = () => {
+  db.query('SELECT * FROM department', (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.table(result);
+    question();
+  });
+};
+
+const addDepartment = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the department?',
+      },
+    ])
+    .then((answers) => {
+      db.query('INSERT INTO department SET ?', [answers], (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.table(result);
+        question();
+      });
+    });
+};
 
 question();
