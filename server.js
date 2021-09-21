@@ -78,16 +78,14 @@ const addEmployee = () => {
         message: 'What is the employee\'s last name?',
       },
       {
-        type: 'list',
-        name: 'role',
-        message: 'What is the employee\'s role?',
-        choices: ['test'], // Need to add way to query results from roles table so user doesn't input a missing role
+        type: 'input',
+        name: 'roleId',
+        message: 'What is the employee\'s role? Please input the role ID.',
       },
       {
-        type: 'list',
-        name: 'manager',
-        message: 'Who is the employee\'s manager?',
-        choices: ['test'], // Need to add way to query names of employees from employee table
+        type: 'input',
+        name: 'managerId',
+        message: 'Who is the employee\'s manager? Please type in the ID.',
       },
     ])
     .then((answers) => {
@@ -105,20 +103,18 @@ const updateEmployeeRole = () => {
   inquirer
     .prompt([
       {
-        type: 'list',
-        name: 'employee',
-        message: 'Which employee\'s role do you want to update?',
-        choices: ['test'],
+        type: 'input',
+        name: 'employeeId',
+        message: 'Which employee\'s role do you want to update? Please type in the ID.',
       },
       {
-        type: 'list',
-        name: 'role',
-        message: 'Which role do you want to assign the selected employee?',
-        choices: ['test'],
+        type: 'input',
+        name: 'roleId',
+        message: 'Which role id do you want to assign the selected employee?',
       },
     ])
     .then((answers) => {
-      db.query('UPDATE employee SET roles_id = ? WHERE id = ?', [answers.role, answers.employee], (err, results) => {
+      db.query('UPDATE employee SET roles_id = ? WHERE id = ?', [answers.roleId, answers.employeeId], (err, results) => {
         if (err) {
           console.log(err);
         }
@@ -152,10 +148,9 @@ const addRole = () => {
         message: 'What is the salary of the role?',
       },
       {
-        type: 'list',
-        name: 'deparment',
-        message: 'Which department does this role belong to?',
-        choices: ['test'], // Need to find way to query department names
+        type: 'input',
+        name: 'deparmentId',
+        message: 'Which department id does this role belong to?',
       },
     ])
     .then((answers) => {
