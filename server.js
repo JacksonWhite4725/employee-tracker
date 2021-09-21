@@ -13,7 +13,6 @@ const db = mysql.createConnection(
 );
 
 const question = () => {
-  console.log(titles);
   inquirer
     .prompt([
       {
@@ -47,7 +46,7 @@ const question = () => {
           addDepartment();
           break;
         case 'Quit':
-          // RUN QUIT HERE
+          quit();
           break;
         default:
           break;
@@ -198,6 +197,10 @@ const addDepartment = () => {
         question();
       });
     });
+};
+
+const quit = () => {
+  process.exit();
 };
 
 question();
