@@ -25,7 +25,7 @@ const question = () => {
     .then((answers) => {
       switch (answers.questionSelection) {
         case 'View All Employees':
-          // RUN VIEW EMPLOYEE QUERY HERE
+          viewAllEmployees();
           break;
         case 'Add Employee':
           // RUN ADD EMPLOYEE QUERY HERE
@@ -54,10 +54,14 @@ const question = () => {
     });
 };
 
-/*
-**PSUDEOCODE**
-Use inquerirer to display different selections using list type questions
-Depending on answers, use the db.query function to select, insert, update, or delete values
-Use the console table package to display results in CLI
-*/
+const viewAllEmployees = () => {
+  db.query('SELECT * FROM employee', (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.table(result);
+    question();
+  });
+}
+
 question();
