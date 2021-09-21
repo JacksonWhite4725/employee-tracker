@@ -32,10 +32,10 @@ const question = () => {
           addEmployee();
           break;
         case 'Update Employee Role':
-          // RUN UPDATE EMPLOYEE QUERY HERE
+          updateEmployeeRole();
           break;
         case 'View All Roles':
-          // RUN VIEW ROLES QUERY HERE
+          ViewAllRoles();
           break;
         case 'Add Role':
           // RUN ADD ROLE QUERY HERE
@@ -100,6 +100,43 @@ const addEmployee = () => {
         question();
       });
     });
+};
+
+const updateEmployeeRole = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'employee',
+        message: 'Which employee\'s role do you want to update?',
+        choices: ['test'],
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: 'Which role do you want to assign the selected employee?',
+        choices: ['test'],
+      },
+    ])
+    .then((answers) => {
+      db.query('UPDATE employee SET roles_id = ? WHERE id = ?', [answers.role, answers.employee], (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log('Updated employee\'s role!');
+        question();
+      });
+    });
+};
+
+const ViewAllRoles = () => {
+  db.query('SELECT * FROM roles', (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.table(result);
+    question();
+  });
 }
 
 question();
