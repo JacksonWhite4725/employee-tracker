@@ -13,6 +13,7 @@ const db = mysql.createConnection(
 );
 
 const question = () => {
+  console.log(titles);
   inquirer
     .prompt([
       {
@@ -28,7 +29,7 @@ const question = () => {
           viewAllEmployees();
           break;
         case 'Add Employee':
-          // RUN ADD EMPLOYEE QUERY HERE
+          addEmployee();
           break;
         case 'Update Employee Role':
           // RUN UPDATE EMPLOYEE QUERY HERE
@@ -62,6 +63,43 @@ const viewAllEmployees = () => {
     console.table(result);
     question();
   });
+}
+
+const addEmployee = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: 'What is the employee\'s first name?',
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: 'What is the employee\'s last name?',
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: 'What is the employee\'s role?',
+        choices: ['test'], // Need to add way to query results from roles table so user doesn't input a missing role
+      },
+      {
+        type: 'list',
+        name: 'manager',
+        message: 'Who is the employee\'s manager?',
+        choices: ['test'], // Need to add way to query names of employees from employee table
+      },
+    ])
+    .then((answers) => {
+      db.query('INSERT INTO employee SET ?', [answers], (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.table(result);
+        question();
+      });
+    });
 }
 
 question();
