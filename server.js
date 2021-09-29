@@ -61,22 +61,22 @@ const addEmployee = () => {
     .prompt([
       {
         type: 'input',
-        name: 'firstName',
+        name: 'first_name',
         message: 'What is the employee\'s first name?',
       },
       {
         type: 'input',
-        name: 'lastName',
+        name: 'last_name',
         message: 'What is the employee\'s last name?',
       },
       {
         type: 'input',
-        name: 'roleId',
+        name: 'roles_id',
         message: 'What is the employee\'s role? Please input the role ID.',
       },
       {
         type: 'input',
-        name: 'managerId',
+        name: 'manager_id',
         message: 'Who is the employee\'s manager? Please type in the ID.',
       },
     ])
@@ -96,12 +96,12 @@ const updateEmployeeRole = () => {
     .prompt([
       {
         type: 'input',
-        name: 'employeeId',
+        name: 'id',
         message: 'Which employee\'s role do you want to update? Please type in the ID.',
       },
       {
         type: 'input',
-        name: 'roleId',
+        name: 'roles_id',
         message: 'Which role id do you want to assign the selected employee?',
       },
     ])
@@ -111,6 +111,7 @@ const updateEmployeeRole = () => {
           console.log(err);
         }
         console.log('Updated employee\'s role!');
+        console.table(result);
         question();
       });
     });
@@ -131,7 +132,7 @@ const addRole = () => {
     .prompt([
       {
         type: 'input',
-        name: 'role',
+        name: 'title',
         message: 'What is the name of the role?',
       },
       {
@@ -141,12 +142,12 @@ const addRole = () => {
       },
       {
         type: 'input',
-        name: 'deparmentId',
+        name: 'department_id',
         message: 'Which department id does this role belong to?',
       },
     ])
     .then((answers) => {
-      db.query('INSERT INTO role SET ?', [answers], (err, result) => {
+      db.query('INSERT INTO roles SET ?', [answers], (err, result) => {
         if (err) {
           console.log(err);
         }
@@ -171,7 +172,7 @@ const addDepartment = () => {
     .prompt([
       {
         type: 'input',
-        name: 'name',
+        name: 'dep_name',
         message: 'What is the name of the department?',
       },
     ])
