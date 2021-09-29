@@ -1,6 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const db = require('./connection');
+const db = require('./config/connection');
+require('dotenv').config();
 require('console.table');
 
 const question = () => {
